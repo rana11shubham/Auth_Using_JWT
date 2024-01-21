@@ -1,0 +1,12 @@
+const authService=require('../services/authService');
+
+const authController={
+    async login(req,res){
+        // Implement login logic using authService
+    },
+    async register(req,res){
+        // Implement register logic using authService
+    },
+};
+
+module.exports=authController;
