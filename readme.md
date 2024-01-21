@@ -1,4 +1,4 @@
-# Init the project-Done
+<!--# Init the project-Done
 # Install the packages-Done
 # Setup the server-DOne
 # connect to mongo-Done
@@ -17,4 +17,4 @@
 # services/: Contains business logic, especially useful for complex operations.
 # config/: Configuration files, such as database connection settings.
 # middleware/: Custom middleware, like authentication middleware.
-# server.js: The main entry point for your application.
+# server.js: The main entry point for your application. -->
