@@ -3,9 +3,25 @@ const authService=require('../services/authService');
 const authController={
     async login(req,res){
         // Implement login logic using authService
+        const {username,password}=req.body;
+        try{
+            const token=await authService.login(username,password);
+            res.cookie('jwt',token,{httpOnly:true});
+            res.json({success:true,token});
+        } catch(err){
+            res.status(401).json({success:false,message:'Invalid credentials'});
+        }
     },
     async register(req,res){
         // Implement register logic using authService
+        const {username,email_id,password}=req.body;
+        try{
+            const registrationResult=await authService.register(username,email_id,password);
+            // If registration is successful, send a success response
+            res.json({success:true, message:registrationResult.message});
+        } catch(err){
+            res.status(400).json({success:false,message:err.message});
+        }
     },
 };
 
