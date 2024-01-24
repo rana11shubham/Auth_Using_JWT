@@ -17,7 +17,7 @@ const authService={
             const passwordMatch=await bcrypt.compare(password,user.Password);
             console.log(passwordMatch);
             if(passwordMatch){
-                const token=jwt.sign({userId:username},config.jwtSecret,{
+                const token=jwt.sign({username},config.jwtSecret,{
                     expiresIn:'2h',
                 });
                 return {token};

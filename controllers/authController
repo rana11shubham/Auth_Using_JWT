@@ -5,7 +5,8 @@ const authController={
         // Implement login logic using authService
         const {username,password}=req.body;
         try{
-            const token=await authService.login(username,password);
+            const {token}=await authService.login(username,password);
+            console.log(token);
             res.cookie('jwt',token,{httpOnly:true});
             res.json({success:true,token});
         } catch(err){
