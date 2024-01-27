@@ -1,0 +1,57 @@
+const noteService=require('../services/noteService');
+const {validationResult}=require('express-validator');
+const bodyParser=require('body-parser');
+
+console.log('note Controller loaded');
+
+const noteController={
+
+    async fetchNotes(req,res){
+        try{
+            const user=req.user.username;
+            const notes=await noteService.RetrieveNote(user);
+            res.status(200).json({message:"Fetched successfully",notes});
+        }
+        catch(error){
+            res.status(500).json({error:'Internal Server Error'});
+        }
+    },
+    async CreateNotes(req,res){
+        try{
+            console.log("hello");
+            const user=req.user.username;
+            console.log(user);
+            const notes=await noteService.CreateNote(user,req.body.title,req.body.description);
+            res.status(200).json({message:'Your note has been created successfully',notes});
+        }
+        catch(error){
+            res.status(500).json({error:'Internal Server Error'});
+        }
+    },
+    async DeleteNotes(req,res){
+        try{
+
+            note_id=req.params['id'];
+            console.log(note_id);
+            const notes=await noteService.DeleteNote(req.user.username,note_id);
+            res.status(200).json({message:"Deleted successfully"});
+        }
+        catch(error){
+            res.status(500).json({error:'Internal Server Error'});
+        }
+    },
+    async UpdateNotes(req,res){
+        try{
+            note_id=req.params['id'];
+            const notes=await noteService.UpdateNote(note_id,req.user.username,req.body.title,req.body.description);
+            res.status(200).json({message:"Updated successfully"});
+
+        }
+        catch(error){
+            res.status(500).json({error:'Internal Server Error'});
+        }
+    },
+
+}
+
+module.exports=noteController;

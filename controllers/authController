@@ -6,7 +6,7 @@ const authController={
         const {username,password}=req.body;
         try{
             const {token}=await authService.login(username,password);
-            console.log(token);
+            //console.log(token);
             res.cookie('jwt',token,{httpOnly:true});
             res.json({success:true,token});
         } catch(err){
@@ -15,9 +15,9 @@ const authController={
     },
     async register(req,res){
         // Implement register logic using authService
-        const {username,email_id,password}=req.body;
+        const {username,password}=req.body;
         try{
-            const registrationResult=await authService.register(username,email_id,password);
+            const registrationResult=await authService.register(username,password);
             // If registration is successful, send a success response
             res.json({success:true, message:registrationResult.message});
         } catch(err){

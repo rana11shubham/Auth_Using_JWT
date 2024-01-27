@@ -8,14 +8,14 @@ const authService={
         try{
             //Find the user by username
             const user=await User.findOne({username});
-            console.log(user);
+            //console.log(user);
             // Check if the user exists
             if(user==null){
                 throw new Error('Invalid Credentials');
             }
             // Compare the provided password with the stored hashed password
             const passwordMatch=await bcrypt.compare(password,user.Password);
-            console.log(passwordMatch);
+            //console.log(passwordMatch);
             if(passwordMatch){
                 const token=jwt.sign({username},config.jwtSecret,{
                     expiresIn:'2h',
@@ -31,7 +31,7 @@ const authService={
         }
 
     },
-    async register(username,email_id,password){
+    async register(username,password){
         // Checking whether the user has already in the system or not.
         try{
             const existingUser=await User.findOne({username});
@@ -43,7 +43,6 @@ const authService={
             // Create a new user
             const newUser=new User({
                 username:username,
-                email_id:email_id,
                 Password:hashedPassword,
             });
             await newUser.save();
