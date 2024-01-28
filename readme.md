@@ -25,4 +25,23 @@ Backend:
 3. /notes/:id -put- update notes
 4. /notes/:id- delete notes
 
+
+Frontend:
+1. Setup the frontend server.
+2. notenest-frontend
+├── src
+│   ├── components
+│   │   ├── NoteList.js
+│   │   ├── NoteForm.js
+│   │   └── ...
+│   ├── services
+│   │   ├── authService.js
+│   │   ├── noteService.js
+│   │   └── ...
+│   ├── pages
+│   │   ├── Home.js
+│   │   ├── Login.js
+│   │   └── ...
+│   ├── App.js
+│   └── index.js
 -->

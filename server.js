@@ -7,11 +7,16 @@ const authRoutes = require("./routes/auth");
 const cookieParser=require('cookie-parser');
 const authMiddleware=require('./middleware/authMiddleware');
 const notesRoutes=require('./routes/notes');
+const cors=require('cors');
 
 require('dotenv').config();
 const { uri, port } = process.env;
 mongoose.connect(uri);
-
+const corsOptions = {
+  origin: "http://localhost:5173", // to allow requests from client
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
