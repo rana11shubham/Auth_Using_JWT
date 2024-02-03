@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import authService from '../services/authService.jsx';
 import {useNavigate } from 'react-router-dom';
 
@@ -7,22 +7,51 @@ const Login=()=>{
     const [Credentials,setCredentials]=useState({
         username:'', password:''
     });
+    const [error,setError]=useState(null);
     const navigate=useNavigate();
     const handleInputChange=(e)=>{
         setCredentials({...Credentials,[e.target.name]:e.target.value});
+        setError(null);
     }
-    const handleLogin=async()=>{
-        try{
-            //console.log(userInfo);
-            const status=await authService.login(Credentials);
-            navigate('/notes');
-            
-            //console.log(status);
+    useEffect(()=>{
+        const checkAuthentication=async()=>{
+            try{
+                const response=await authService.isAuthenticated();
+                if(response==true){
+                    navigate('/notes');
+                }
+                else{
+                    navigate('/login');
+                    console.log('Not authenticated');
+                }
+            }
+            catch(err){
+                console.log(err);
+            }
         }
-        catch(err){
-            console.log('Login failed:',err.message);
+        checkAuthentication();
+    },[navigate]);
+
+    const handleLogin = async () => {
+        try {
+          // Client-side validation
+          if (!Credentials.username || !Credentials.password) {
+            setError('Please enter both username and password.');
+            return;
+          }
+    
+          const status = await authService.login(Credentials);
+          console.log(status);
+          navigate('/notes');
+        } catch (err) {
+          setError('Invalid username or password');
+          console.log('Login failed:', err.message);
         }
-    };
+      };
+
+    function handleCreateNew(){
+        navigate('/register');
+    }
 
 return (
     <div className="w-full max-w-xs">
@@ -43,9 +72,17 @@ return (
   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleLogin}>
     Sign In
   </button>
+  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleCreateNew}>
+    Create New
+  </button>
   
 </div>
 </form>
+{error && (
+        <div className="relative block w-full p-4 mb-4 text-base leading-5 text-white bg-red-500 rounded-lg opacity-100 font-regular">
+          {error}
+        </div>
+      )}
 
 </div>
 

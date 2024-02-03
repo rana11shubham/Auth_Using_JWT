@@ -3,7 +3,7 @@ const config=require('../config/config');
 
 const authMiddleware=(req,res,next)=>{
     const token=req.headers.authorization || req.cookies.jwt; 
-    console.log(token);  
+    //console.log(token);  
     
     if(!token){
         return res.status(401).json({error:'Unauthorized- No token provided'});
@@ -12,6 +12,7 @@ const authMiddleware=(req,res,next)=>{
         const decodedToken=jwt.verify(token,config.jwtSecret);
         //console.log(decodedToken);
         req.user=decodedToken;
+        console.log(req.user);
         next();
     } catch(err){
         return res.status(401).json({error:'Unauthorized- Invalid token'});
